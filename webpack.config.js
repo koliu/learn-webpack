@@ -42,6 +42,9 @@ module.exports = {
                 }]
                 // 順序：右(先用) -> 左(後用)
                 // loaders: ['style-loader', 'css-loader']
+        }, {
+            test: /\.scss$/,
+            loaders: ['style-loader', 'css-loader', 'sass-loader']
         }]
     }
 }

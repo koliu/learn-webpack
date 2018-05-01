@@ -311,3 +311,29 @@ import 'style-loader!css-loader!./main.css';
     * test 不能用 "" 括住，會造成："Module parse failed: Unexpected token"
         * [The issue for 'You may need an appropriate loader to handle this file type.'](https://github.com/shama/letswritecode/issues/8)
     * loader 設定的順序(下>上；右>左)，設錯會造成："Module build failed: Unknown word"
+
+#### SCSS
+
+* ref:
+    * [sass-loader](https://github.com/webpack-contrib/sass-loader)
+    * [介紹 Plugins](https://neighborhood999.github.io/webpack-tutorial-gitbook/Part1/IntroductionPlugin.html)
+
+* install
+
+```shell
+yarn add --dev sass-loader node-sass
+```
+
+* settup
+
+```js
+{
+    module: {
+        rules: [{
+            test: /\.scss$/,
+            //順序：右(先用) -> 左(後用)
+            loaders: ['style-loader', 'css-loader', 'sass-loader']
+        }]
+    }
+}
+```
