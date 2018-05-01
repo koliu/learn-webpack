@@ -242,3 +242,34 @@ npm run server
     "presets": ["env"]
 }
 ```
+
+#### CSS
+
+* Ref:
+    * [<06 - 心法3 - 強化> Loaders - 示範 css-loader 與 style-loader](https://ithelp.ithome.com.tw/articles/10185136)
+
+* Install
+
+```shell
+# css-loader: @import 及 url(...) 實現 require 功能
+# style-loader: 將 <style></style> 插入<head>
+yarn add --dev style-loader css-loader
+```
+
+* Adjust Code
+
+```js
+// css-loader
+// 解讀(右 > 左)：將 ./main.css 用 css-loader 導入 js
+//使用 import 導入 css 檔
+import 'css-loader!./main.css';
+//or
+var css = require("css-loader!./main.css");
+
+//==============================================
+// style-loader
+// 解讀(右 > 左)：將 ./main.css 用 css-loader 導入 js，再由 style-loader 注入到 html.head
+import 'style-loader!css-loader!./main.css';
+```
+
+* Run: npm run wp, npm run server
