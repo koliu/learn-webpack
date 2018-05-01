@@ -8,7 +8,7 @@ yarn init
 yarn add --dev webpack
 ```
 
-### Step:
+### Using(with command line):
 1. public/index.html: 先指定之後會用 Webpack 打包產生的 bundle.js
 ```html
 <body>
@@ -44,3 +44,22 @@ document.getElementById("root").appendChild(greeter());
     # @ multi ./app/main.js public/bundle.js
     ```
 5. Run public/index.html in browser >> "Hello, this is Greeter.js"
+
+### Using(with webpack.config.js):
+1. Add webpack.config.js to root of project
+```js
+module.exports = {
+    // __dirname 是 webpack 的全域變數：當前檔案的所在目錄
+    // entry: 進入點檔案
+    // output: 輸出的目標檔案
+    entry: `${__dirname}/app/main.js`,
+    output: {
+        path: `${__dirname}/public`,
+        filename: "bundle.js"
+    }
+}
+```
+2. Run
+```shell
+..\node_modules\.bin\webpack
+```
