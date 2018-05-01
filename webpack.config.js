@@ -25,12 +25,7 @@ module.exports = {
         rules: [{
             test: "/(\.js)$/",
             use: {
-                loader: "babel-loader",
-                options: {
-                    presets: [
-                        "env"
-                    ]
-                }
+                loader: "babel-loader"
             },
             exclude: "/node_modules/"
         }]

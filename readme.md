@@ -218,3 +218,27 @@ npm run wp
 # ES6 module must test in server
 npm run server
 ```
+
+* Use .babelrc
+
+```js
+// webpack.config.js
+{
+    module: {
+        rules: [{
+            test: "/(\.js)$/",
+            use: {
+                loader: "babel-loader"
+            },
+            exclude: "/node_modules/"
+        }]
+    }
+}
+```
+
+```json
+// .babelrc
+{
+    "presets": ["env"]
+}
+```
