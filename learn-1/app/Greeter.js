@@ -1,5 +1,7 @@
+const config = require("./config.json");
+
 module.exports = () => {
     let greet = document.createElement("div");
-    greet.textContent = "Hello, this is Greeter.js";
+    greet.textContent = config.greetText;
     return greet;
 }
