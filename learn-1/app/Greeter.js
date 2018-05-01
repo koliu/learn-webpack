@@ -1,6 +1,6 @@
-const config = require("./config.json");
+import config from "./config.json";
 
-module.exports = () => {
+export default function Greeter() {
     let greet = document.createElement("div");
     greet.textContent = config.greetText;
     return greet;

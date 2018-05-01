@@ -175,3 +175,46 @@ npm run server
 # 附加執行參數
 npm run server --open --hot --colors --progress --inline --config webpack.dev.js
 ```
+
+### Loaders
+
+#### Babel
+
+* Install
+
+```shell
+# babel-preset-env: for ES6
+# babel-preset-react: for JSX
+yarn add --dev babel-core babel-loader babel-preset-env babel-preset-react
+```
+
+* Setting
+
+```js
+// webpack.config.js
+{
+    module: {
+        rules: [{
+            test: "/(\.js)$/",
+            use: {
+                loader: "babel-loader",
+                options: {
+                    presets: [
+                        "env"
+                    ]
+                }
+            },
+            exclude: "/node_modules/"
+        }]
+    }
+}
+```
+
+* Adjust Code to ES6
+* Run:
+
+```shell
+npm run wp
+# ES6 module must test in server
+npm run server
+```

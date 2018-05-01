@@ -1,2 +1,2 @@
-const greeter = require("./Greeter.js");
-document.getElementById("root").appendChild(greeter());
+import Greeter from "./Greeter";
+document.getElementById("root").appendChild(Greeter());
