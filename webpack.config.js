@@ -29,22 +29,22 @@ module.exports = {
             },
             exclude: "/node_modules/"
         }, {
-            test: /\.css$/,
+            test: /(\.scss|\.css)$/,
             // 同時使用多個 loader 來解析 css
             // 順序：下(先用) -> 上(後用)
             use: [{
-                    loader: "style-loader"
-                }, {
-                    loader: "css-loader",
-                    options: {
-                        modules: true
-                    }
-                }]
-                // 順序：右(先用) -> 左(後用)
-                // loaders: ['style-loader', 'css-loader']
-        }, {
-            test: /\.scss$/,
-            loaders: ['style-loader', 'css-loader', 'sass-loader']
+                loader: "style-loader"
+            }, {
+                loader: "css-loader",
+                options: {
+                    // 啟用 css modules
+                    modules: true,
+                    // 指定 css 的類別名稱，預設為 import { className } from "./style.css" 的 className
+                    localIdentName: '[name]__[local]--[hash:base64:5]'
+                }
+            }, {
+                loader: "sass-loader"
+            }]
         }]
     }
 }

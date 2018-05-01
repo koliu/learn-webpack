@@ -276,6 +276,7 @@ import 'style-loader!css-loader!./main.css';
 * Set up config of style-loader/css-loader in webpack.config.js: 如此在 import 時不用加 style-loader!css-loader!
 
 ```js
+// webpack.config.js
 {
     module: {
         rules: [{
@@ -285,10 +286,7 @@ import 'style-loader!css-loader!./main.css';
             use: [{
                     loader: "style-loader"
                 }, {
-                    loader: "css-loader",
-                    options: {
-                        modules: true
-                    }
+                    loader: "css-loader"
                 }]
         }]
     }
@@ -327,6 +325,7 @@ yarn add --dev sass-loader node-sass
 * settup
 
 ```js
+// webpack.config.js
 {
     module: {
         rules: [{
@@ -336,4 +335,67 @@ yarn add --dev sass-loader node-sass
         }]
     }
 }
+```
+
+#### CSS Module: 類似 JS Module 思維，讓所有 CSS 的類別名、動畫名都預設只作用在當前模組下，避免全域污染。
+
+* ref:
+    * [css-modules](https://github.com/css-modules/css-modules)
+* Setup
+
+```js
+{
+    module: {
+        rules: [{
+            test: /\.css$/,
+            use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader",
+                    options: {
+                        // 啟用 css modules
+                        modules: true,
+                        // 指定 css 的類別名稱，預設為 import { className } from "./style.css" 的 className
+                        // localIdentName: '[name]__[local]--[hash:base64:5]'
+                    }
+                }]
+        }]
+    }
+}
+```
+
+* Adjust Code:
+
+```js
+// Greeter.js
+import mainStyles from './main.scss';
+
+export default function Greeter() {
+    let greet = document.createElement("div");
+    // mainStyles.root1
+    greet.classList.add(mainStyles.root1);
+    return greet;
+}
+```
+
+* 注意： css-modules 似乎只適用程式產生的 html 標籤的 class
+```html
+<style type="text/css">
+html {
+  box-sizing: border-box;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; }
+
+/* ... */
+
+/* 原本 .root 也被更名為 .main__root--3Q2VU，但 html 中還是 root */
+.main__root--3Q2VU {
+  color: yellowgreen; }
+
+.main__root1--1tB5V {
+  color: red; }
+</style>
+<div class="root">
+    <div class="main__root1--1tB5V">Hello, this is Greeter.js</div>
+</div>
 ```
