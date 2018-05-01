@@ -399,3 +399,48 @@ html {
     <div class="main__root1--1tB5V">Hello, this is Greeter.js</div>
 </div>
 ```
+
+#### PostCSS
+
+* ref:
+    * [PostCSS](https://github.com/postcss/postcss)
+
+* install
+
+```shell
+yarn add --dev postcss-loader autoprefixer
+```
+
+* setup
+
+```js
+// webpack.config.js
+{
+    module: {
+        rules: [{
+            test: /(\.js)$/,
+            use: {
+                loader: "babel-loader"
+            },
+            exclude: "/node_modules/"
+        }, {
+            test: /(\.scss|\.css)$/,
+            use: [{
+                loader: "style-loader"
+            }, {
+                loader: "css-loader",
+            }, {
+                // 注意順序必須在 preCSS 後，css-loader 前
+                loader: "postcss-loader",
+                options: {
+                    plugins: () => [require('autoprefixer')({
+                        'browsers': ['> 1%', 'last 2 versions']
+                    })],
+                }
+            }, {
+                loader: "sass-loader"
+            }]
+        }]
+    }
+}
+```
