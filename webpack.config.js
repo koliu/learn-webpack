@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     // source map: source-map, cheap-module-source-map, eval-source-map, cheap-module-eval-source-map
@@ -52,6 +53,10 @@ module.exports = {
         }]
     },
     plugins: [
-        new webpack.BannerPlugin('版权所有，翻版必究！')
+        new webpack.BannerPlugin('版权所有，翻版必究！'),
+        new htmlWebpackPlugin({
+            template: `${__dirname}/learn-1/app/index.tmpl.html`
+
+        })
     ],
 }

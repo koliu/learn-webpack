@@ -507,3 +507,63 @@ module.exports = {
 // bundle.js
 /*! 版权所有，翻版必究！ */......
 ```
+
+#### [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+
+* Description
+    * 可根據自訂好的模板，為每個 entry 建立 html 檔
+
+* Install
+
+```shell
+yarn add --dev html-webpack-plugin
+```
+
+* Add Html Template
+
+```html
+<!-- app/index.tmpl.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Webpack Learn-1 - template</title>
+</head>
+
+<body>
+    <div class="root">
+    </div>
+</body>
+
+</html>
+```
+
+* Setup
+
+```js
+// webpack.config.js
+const htmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    plugins: [
+        new webpack.BannerPlugin('版权所有，翻版必究！'),
+        new htmlWebpackPlugin({
+            template: `${__dirname}/learn-1/app/index.tmpl.html`
+        })
+    ]
+}
+```
+
+* Run: 執行 npm run wp 後會在 public/ 下自動建立包含 bundle.js script 的 index.html
+
+
+---
+## 待研究
+* [webpack2引入bootstrap的坑](https://www.cnblogs.com/oufeng/p/6819161.html)
+* [使用 webpack 模組化你的程式碼，讓人生更美好](https://ithelp.ithome.com.tw/users/20069901/ironman/1074)
+* [clean-webpack-plugin](https://www.google.com.tw/search?q=webpack+clean+plugin&rlz=1C1CHZL_enTW764TW764&oq=webpack+clean&aqs=chrome.1.69i57j0l5.7739j0j1&sourceid=chrome&ie=UTF-8)
+    * [webpack2利用插件clean-webpack-plugin来清除dist文件夹中重复的文件](https://www.cnblogs.com/oufeng/p/6819320.html)
+    * [<20 - Plugins 小幫手 03> 清除 bundle 後的資料夾 - clean-webpack-plugin](https://ithelp.ithome.com.tw/articles/10186633)
