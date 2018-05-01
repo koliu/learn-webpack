@@ -404,6 +404,8 @@ html {
 
 * ref:
     * [PostCSS](https://github.com/postcss/postcss)
+    * [autoprefixer](https://github.com/postcss/autoprefixer)
+    * [Webpack 4, postcss-loader and autoprefixer plugin](https://stackoverflow.com/questions/49782806/webpack-4-postcss-loader-and-autoprefixer-plugin)
 
 * install
 
@@ -418,12 +420,6 @@ yarn add --dev postcss-loader autoprefixer
 {
     module: {
         rules: [{
-            test: /(\.js)$/,
-            use: {
-                loader: "babel-loader"
-            },
-            exclude: "/node_modules/"
-        }, {
             test: /(\.scss|\.css)$/,
             use: [{
                 loader: "style-loader"
@@ -437,6 +433,37 @@ yarn add --dev postcss-loader autoprefixer
                         'browsers': ['> 1%', 'last 2 versions']
                     })],
                 }
+            }, {
+                loader: "sass-loader"
+            }]
+        }]
+    }
+}
+```
+
+* Setup2: with postcss.config.js
+
+```js
+// postcss.config.js
+module.exports = {
+    plugins: [
+        require('autoprefixer')({
+            'browsers': ['> 1%', 'last 2 versions']
+        })
+    ]
+};
+
+// webpack.config.js
+{
+    module: {
+        rules: [{
+            test: /(\.scss|\.css)$/,
+            use: [{
+                loader: "style-loader"
+            }, {
+                loader: "css-loader",
+            }, {
+                loader: "postcss-loader",
             }, {
                 loader: "sass-loader"
             }]
