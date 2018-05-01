@@ -122,3 +122,56 @@ ERROR in Entry module not found: Error: Can't resolve './src' in 'W:\_workspace\
     * cheap-module-source-map: 只能對應到程式碼的列號，無法對應該列中的實際行號，不利除錯，但速度快。
     * eval-source-map: 在原始碼檔案中產生對應資料，不影響打包速度，但安全性及執行時期效能較差，只適用於開發階段。
     * cheap-module-eval-source-map: 最快的打包速度，產生的 map 會和原檔同列顯示，但也和 eval-source-map 有相似的缺點。
+
+
+### Webpack Dev Server
+
+* Ref:
+    * [DevServer](https://webpack.js.org/configuration/dev-server/)
+    * [关于Webpack-dev-server配置的点点滴滴](https://github.com/huruji/blog/issues/10)
+    * [webpack 看我就够了（三）](https://www.jianshu.com/p/b5248d441d9e)
+
+* Install
+
+```shell
+yarn add --dev webpack-dev-server
+```
+
+* Settings
+
+```js
+// webpack.config.js
+{
+    devServer: {
+        // root path of server, default is root of project
+        contentBase: "./learn-1/public",
+        // 對於 SPA，瀏覽器的 History 可以設成 HTML5 History API/Hash
+        // 若設成 HTML5 History API，重整時會出現 404，因為它是以其它路徑來訪問後台
+        // 此處設成 true，代表 404 都指向 index.html
+        historyApiFallback: true,
+        // watch
+        inline: true,
+        port: 28080
+    }
+}
+```
+
+* Setting for run webpack-dev-server by yarn command
+
+```json
+{
+    "scripts": {
+        "server": "webpack-dev-server"
+    }
+}
+```
+
+* Run
+    * 
+
+```shell
+# 依 scripts 設定執行 
+npm run server
+# 附加執行參數
+npm run server --open --hot --colors --progress --inline --config webpack.dev.js
+```
