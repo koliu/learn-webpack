@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
     // source map: source-map, cheap-module-source-map, eval-source-map, cheap-module-eval-source-map
     devtool: "eval-source-map",
@@ -48,5 +50,8 @@ module.exports = {
                 loader: "sass-loader"
             }]
         }]
-    }
+    },
+    plugins: [
+        new webpack.BannerPlugin('版权所有，翻版必究！')
+    ],
 }

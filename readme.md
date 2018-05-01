@@ -176,6 +176,8 @@ npm run server
 npm run server --open --hot --colors --progress --inline --config webpack.dev.js
 ```
 
+---
+
 ### Loaders
 
 #### Babel
@@ -470,4 +472,38 @@ module.exports = {
         }]
     }
 }
+```
+
+---
+
+### Plugins
+
+* Plugins vs. Loaders
+    * Loaders: 在打包過程中對來源檔案進行處理，一次處理一個。
+    * Plugins: 用來擴展 webpack 功能，直接對整個專案建構過程作用，並不直接處理單個檔案。
+
+* 使用方式：
+    1. npm install
+    2. 在 webpack.config.js 中的 plugins 進行設定
+
+#### [BannerPlugin](https://webpack.js.org/plugins/banner-plugin/): 版權宣告
+
+* Setup
+
+```js
+// webpack.config.js
+const webpack = require('webpack');
+
+module.exports = {
+    plugins: [
+        new webpack.BannerPlugin('版权所有，翻版必究！')
+    ],
+}
+```
+
+* Result
+
+```js
+// bundle.js
+/*! 版权所有，翻版必究！ */......
 ```
