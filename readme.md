@@ -1,22 +1,29 @@
 # Learn-Webpack
+
 ---
+
 ## Learn-1: [入门Webpack，看这篇就够了](https://www.jianshu.com/p/42e11515c10f)
 
-### Install:
+### Install
+
 ```shell
 yarn init
 yarn add --dev webpack
 ```
 
 ### Using(with command line):
-1. public/index.html: 先指定之後會用 Webpack 打包產生的 bundle.js
+
+1.public/index.html: 先指定之後會用 Webpack 打包產生的 bundle.js
+
 ```html
 <body>
     <div id="root"></div>
     <script src="bundle.js"></script>
 </body>
 ```
-2. app/Greeter.js: CommonJS
+
+2.app/Greeter.js: CommonJS
+
 ```js
 module.exports = () => {
     let greet = document.createElement("div");
@@ -24,12 +31,16 @@ module.exports = () => {
     return greet;
 }
 ```
-3. app/main.js: CommonJS
+
+3.app/main.js: CommonJS
+
 ```js
 const greeter = require("./Greeter.js");
 document.getElementById("root").appendChild(greeter());
 ```
-4. Using Webpack: 4.6.0(In command line)
+
+4.Using Webpack: 4.6.0(In command line)
+
     * 語法：
     ```shell
     # {entry file}: 進入點檔案
@@ -43,10 +54,12 @@ document.getElementById("root").appendChild(greeter());
     # Module not found: Error: Can't resolve 'public/bundle.js' in 'W:\_workspace\learn-webpack\learn-1'
     # @ multi ./app/main.js public/bundle.js
     ```
-5. Run public/index.html in browser >> "Hello, this is Greeter.js"
+5.Run public/index.html in browser >> "Hello, this is Greeter.js"
 
 ### Using(with webpack.config.js):
-1. Add webpack.config.js to root of project
+
+1.Add webpack.config.js to root of project
+
 ```js
 module.exports = {
     // __dirname 是 webpack 的全域變數：當前檔案的所在目錄
@@ -59,7 +72,40 @@ module.exports = {
     }
 }
 ```
-2. Run
+
+2.Run
+
 ```shell
 ..\node_modules\.bin\webpack
 ```
+
+### Run webpack by npm start/npm run {custom name}
+
+* 注意：要使用此法必須將 webpack 卡在專案根目錄(和 package.json 同一層)
+
+```log
+ERROR in Entry module not found: Error: Can't resolve './src' in 'W:\_workspace\learn-webpack'
+```
+
+* "npm start" === "..\node_modules\.bin\webpack"
+
+```json
+{
+    "name": "learn-webpack",
+    "scripts": {
+        "start": "webpack"
+    },
+}
+```
+
+* "npm run wp" === "..\node_modules\.bin\webpack"
+
+```json
+{
+    "name": "learn-webpack",
+    "scripts": {
+        "wp": "webpack"
+    },
+}
+```
+
