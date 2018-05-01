@@ -23,11 +23,25 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: "/(\.js)$/",
+            test: /(\.js)$/,
             use: {
                 loader: "babel-loader"
             },
             exclude: "/node_modules/"
+        }, {
+            test: /\.css$/,
+            // 同時使用多個 loader 來解析 css
+            // 順序：下(先用) -> 上(後用)
+            use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader",
+                    options: {
+                        modules: true
+                    }
+                }]
+                // 順序：右(先用) -> 左(後用)
+                // loaders: ['style-loader', 'css-loader']
         }]
     }
 }

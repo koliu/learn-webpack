@@ -273,3 +273,41 @@ import 'style-loader!css-loader!./main.css';
 ```
 
 * Run: npm run wp, npm run server
+* Set up config of style-loader/css-loader in webpack.config.js: 如此在 import 時不用加 style-loader!css-loader!
+
+```js
+{
+    module: {
+        rules: [{
+            test: /\.css$/,
+            // 同時使用多個 loader 來解析 css
+            // 順序：下(先用) -> 上(後用)
+            use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader",
+                    options: {
+                        modules: true
+                    }
+                }]
+        }]
+    }
+}
+
+// or
+
+{
+    module: {
+        rules: [{
+            test: /\.css$/,
+            //順序：右(先用) -> 左(後用)
+            loaders: ['style-loader', 'css-loader']
+        }]
+    }
+}
+```
+
+* 注意：
+    * test 不能用 "" 括住，會造成："Module parse failed: Unexpected token"
+        * [The issue for 'You may need an appropriate loader to handle this file type.'](https://github.com/shama/letswritecode/issues/8)
+    * loader 設定的順序(下>上；右>左)，設錯會造成："Module build failed: Unknown word"
