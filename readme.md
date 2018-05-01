@@ -109,3 +109,16 @@ ERROR in Entry module not found: Error: Can't resolve './src' in 'W:\_workspace\
 }
 ```
 
+### Source Map
+
+* 要用 Source Map 必須在 webpack.config.js 設定 devtool
+
+```shell
+
+```
+
+* 有四種設定值：
+    * source-map: 功能完全，但會降低打包速度。
+    * cheap-module-source-map: 只能對應到程式碼的列號，無法對應該列中的實際行號，不利除錯，但速度快。
+    * eval-source-map: 在原始碼檔案中產生對應資料，不影響打包速度，但安全性及執行時期效能較差，只適用於開發階段。
+    * cheap-module-eval-source-map: 最快的打包速度，產生的 map 會和原檔同列顯示，但也和 eval-source-map 有相似的缺點。
