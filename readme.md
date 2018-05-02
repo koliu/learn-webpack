@@ -474,6 +474,61 @@ module.exports = {
 }
 ```
 
+#### Pug
+
+* [html-webpack-pug-plugin](https://github.com/negibouze/html-webpack-pug-plugin/blob/master/README.md)
+    >搭配 HtmlWebpackPlugin 使用，可以讓 HtmlWebpackPlugin 產生 pug 檔(注入 pug 格式)
+* [pug-loader](https://github.com/pugjs/pug-loader)
+    * 關於參數的範例用法，可以參考 [html-webpack-template-pug](https://www.npmjs.com/package/html-webpack-template-pug)
+    * template 的擴展：[html-webpack-template](https://github.com/jaketrent/html-webpack-template)
+
+* Install
+
+```shell
+## yarn add --dev html-webpack-pug-plugin
+yarn add --dev pug-loader
+
+## Error: Cannot find module 'pug'
+yarn add --dev pug
+```
+
+* Setup
+
+```js
+// webpack.common.js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    module: {
+        rules: [{
+                test: /(\.pug|\.jade)$/,
+                use: {
+                    loader: "pug-loader"
+                },
+                exclude: "/node_modules/"
+            }]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            /** Required **/
+            // Inject style, script
+            inject: true,
+            template: `${__dirname}/learn-1/app/index.tmpl.pug`,
+
+            /** Optional **/
+            title: 'Custom template',
+            filetype: 'pug'
+        }),
+    ],
+}
+```
+
+* Note:
+    * 在 pug 中注入 html-webpack-plugin 變數，需用 =XXX
+    > title=htmlWebpackPlugin.options.title
+    * 在 html 中注入 html-webpack-plugin 變數，需用 <%=XXX %>
+    > <title><%= htmlWebpackPlugin.options.title %></title>
+
 ---
 
 ### Plugins
