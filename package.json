@@ -4,8 +4,10 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "wp": "webpack",
-        "server": "webpack-dev-server"
+        "build": "webpack",
+        "watch": "webpack --watch",
+        "server": "webpack-dev-server",
+        "server-hot": "webpack-dev-server --hot --hot-only"
     },
     "devDependencies": {
         "autoprefixer": "^8.4.1",

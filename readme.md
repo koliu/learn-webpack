@@ -558,6 +558,115 @@ module.exports = {
 ```
 
 * Run: 執行 npm run wp 後會在 public/ 下自動建立包含 bundle.js script 的 index.html
+* Custom title:
+    1. Template
+    ```html
+    <!-- app/index.tmpl.html -->
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    ```
+    2. Setup
+
+    ```js
+    // webpack.config.js
+    plugins: [
+        new webpack.BannerPlugin('版权所有，翻版必究！'),
+        new htmlWebpackPlugin({
+            title: 'Custom template',
+            template: `${__dirname}/learn-1/app/index.tmpl.html`
+        })
+    ]
+    ```
+
+#### [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/)
+
+* ref:
+    * [Webpack & The Hot Module Replacement](https://medium.com/@rajaraodv/webpack-hot-module-replacement-hmr-e756a726a07)
+
+* 用途：在修改程式碼後，自動刷新
+* Setup
+    1. 啟用 webpack-dev-server hot
+    2. 加入 webpack.HotModuleReplacementPlugin
+    3. 加入 webpack.NamedModulesPlugin: make it easier to see which dependencies are being patched.
+
+```js
+// webpack.config.js
+const webpack = require('webpack');
+
+module.exports = {
+    devServer: {
+        hot: true,
+        hotOnly: true
+    },
+    plugins: [
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin()
+    ]
+}
+```
+
+* **待解決問題**
+    * hot 有跑，但沒作用，步驟：
+        1. 設定
+```js
+// webpack.config.js
+const webpack = require('webpack');
+
+module.exports = {
+    devServer: {
+        hot: true,
+        hotOnly: true
+    },
+    plugins: [
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin()
+    ]
+}
+```
+
+```js
+// app/PrintMe.js
+export default function printMe() {
+    console.log("printMe.js init");
+}
+```
+
+```js
+// app/main.js
+if (module.hot) {
+    module.hot.accept('./PrintMe.js', function() {
+        console.log('Accepting the updated printMe module!');
+        printMe();
+    })
+}
+```
+        3. npm run server
+
+```log
+[HMR] Waiting for update signal from WDS...
+bundle.js:1 [WDS] Hot Module Replacement enabled.
+printMe.js init
+```
+
+        4. change PrintMe.js
+
+```js
+export default function printMe() {
+    console.log("printMe.js modified...");
+}
+```
+
+        5. Browser Log: 仍然印出「bundle.js:1 printMe.js init」，而不是「printMe.js modified...」
+```log
+[WDS] App hot update...
+bundle.js:1 [HMR] Checking for updates on the server...
+bundle.js:1 Accepting the updated printMe module!
+bundle.js:1 printMe.js init
+bundle.js:1 [HMR] Updated modules:
+bundle.js:1 [HMR]  - ./learn-1/app/PrintMe.js
+bundle.js:1 [HMR] App is up to date.
+```
 
 
 ---
