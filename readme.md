@@ -672,6 +672,40 @@ bundle.js:1 [HMR] App is up to date.
         6. ref:
             * [webpack-dev-sever HMR do not works, only working full reload behavior](https://github.com/webpack/webpack-dev-server/issues/1315)
 
+#### [uglifyjs-webpack-plugin](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/#src/components/Sidebar/Sidebar.jsx)
+> 壓縮 JS
+* install
+
+```shell
+yarn add --dev uglifyjs-webpack-plugin
+```
+
+* Settup:
+
+```js
+// webpack.prod.js
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+module.exports = merge(common, {
+    plugins: [
+        new UglifyJsPlugin(),
+    ],
+});
+```
+
+#### OccurrenceOrderPlugin
+
+>分析 id 使用的頻率，讓使用頻率高的模組用較短的 id
+
+* Settup:
+
+```js
+// webpack.prod.js
+module.exports = merge(common, {
+    plugins: [
+        new webpack.optimize.OccurrenceOrderPlugin(),
+    ],
+});
+```
 
 ### 環境切分
 
@@ -694,6 +728,7 @@ bundle.js:1 [HMR] App is up to date.
     }
 }
 ```
+
 ---
 ## 待研究
 * [webpack2引入bootstrap的坑](https://www.cnblogs.com/oufeng/p/6819161.html)
