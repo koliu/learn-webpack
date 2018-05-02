@@ -55,6 +55,5 @@ module.exports = {
             title: 'Custom template',
             template: `${__dirname}/learn-1/app/index.tmpl.html`
         }),
-        new ExtractTextPlugin("styles.css"),
     ],
 }

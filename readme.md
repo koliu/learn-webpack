@@ -764,6 +764,45 @@ module.exports = {
 }
 ```
 
+#### Caching & ChunkHash
+
+> 為檔名附加 Hash，以解決檔名一樣時，瀏覽器誤以為檔案沒更新
+
+* ref:
+    * [[ Ｄ] 學 webpack2 (improve cache/ html-webpack-plugin)](https://medium.com/@ouonnz/%E5%AD%B8-webpack2-%E4%B8%8B-9c32f5a39915)
+    * [Caching](https://webpack.js.org/guides/caching/#src/components/Sidebar/Sidebar.jsx)
+
+* Setup
+    * 若有使用 htmlWebpackPlugin 來產生 html，會自動補齊 chunkhash 檔名。
+    * 由於會影響打包速度，所以只有在 prod 時才使用 chunkhash 檔名
+    * 調整：
+        * 在 webpack.prod.js 設定 output > filename 來覆蓋掉在 webpack.common.js 的設定
+        * 在 webpack.prod.js 及 webpack.dev.js 分別設定 plugins > new ExtractTextPlugin("styles-[chunkhash].css")，並將 webpack.common.js 中的移除。
+            * 需要個別設定是因為 webpack.merge 合併後，new ExtractTextPlugin() 並不是附蓋，所以若只在 common 及 prod 引用時，在 build prod 時會同時產生兩個檔案。
+            * module 中的 use: ExtractTextPlugin.extract() 仍保留在 common 共用。
+
+```js
+// webpack.prod.js
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+module.exports = merge(common, {
+    output: {
+        filename: "bundle-[chunkhash].js"
+    },
+    plugins: [
+        new ExtractTextPlugin("styles-[chunkhash].css"),
+    ],
+}
+
+// webpack.dev.js
+// 沒設定 output > filename 會沿用 common 的設定
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+module.exports = merge(common, {
+    plugins: [
+        new ExtractTextPlugin("styles.css"),
+    ],
+}
+```
+
 
 ---
 
