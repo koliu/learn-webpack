@@ -1,8 +1,19 @@
 # Learn-Webpack
 
+> 此處主要 follow [入门Webpack，看这篇就够了](https://www.jianshu.com/p/42e11515c10f) 的實作練習(使用 Webpack 4.6)，由於該篇距今已有段時間，因此過程中踩到許多坑，而這裡的也是記錄填坑的地方…
+
 ---
 
-## Learn-1: [入门Webpack，看这篇就够了](https://www.jianshu.com/p/42e11515c10f)
+## 目前實作的功能
+
+* 將所有 js/css 打包成單一的 bundle.js(with Uglify, OccurrenceOrder, babel)
+* 也可將 css 抽成獨立的檔案
+* 可以轉譯 pug 為 html
+* 可以利用 chunkhash 及 html-webpack-plugin 來注入hash 檔名及資源值
+
+## 待處理的問題
+
+* webpack-dev-server 的 hot 功能尚無法正常運作(有跑但Runtime 模組沒更新)
 
 ### Install
 
