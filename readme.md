@@ -585,10 +585,12 @@ module.exports = {
     * [Webpack & The Hot Module Replacement](https://medium.com/@rajaraodv/webpack-hot-module-replacement-hmr-e756a726a07)
 
 * 用途：在修改程式碼後，自動刷新
-* Setup
+* Method 1(config)
     1. 啟用 webpack-dev-server hot
     2. 加入 webpack.HotModuleReplacementPlugin
     3. 加入 webpack.NamedModulesPlugin: make it easier to see which dependencies are being patched.
+
+* Method 2 (no config & cli): 只要 webpack-dev-server --hot --hot-only 就會自動引用 HotModuleReplacementPlugin plugins
 
 ```js
 // webpack.config.js
@@ -667,6 +669,8 @@ bundle.js:1 [HMR] Updated modules:
 bundle.js:1 [HMR]  - ./learn-1/app/PrintMe.js
 bundle.js:1 [HMR] App is up to date.
 ```
+        6. ref:
+            * [webpack-dev-sever HMR do not works, only working full reload behavior](https://github.com/webpack/webpack-dev-server/issues/1315)
 
 
 ---

@@ -22,8 +22,6 @@ module.exports = {
         // 若設成 HTML5 History API，重整時會出現 404，因為它是以其它路徑來訪問後台
         // 此處設成 true，代表 404 都指向 index.html
         historyApiFallback: true,
-        hot: true,
-        hotOnly: true,
         // watch & auto reload page (default: true)
         // inline: false,
         port: 28080,
@@ -61,8 +59,6 @@ module.exports = {
         new htmlWebpackPlugin({
             title: 'Custom template',
             template: `${__dirname}/learn-1/app/index.tmpl.html`
-        }),
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        })
     ],
 }
