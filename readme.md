@@ -707,6 +707,66 @@ module.exports = merge(common, {
 });
 ```
 
+#### [extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin)
+
+>Extract text from a bundle, or bundles, into a separate file.
+
+* install
+
+```shell
+yarn add --dev extract-text-webpack-plugin
+```
+
+    * webpack 4+ 相容性問題：[Webpack 4 compatibility](https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/701)
+
+```shell
+## for webpack 4+
+yarn add --dev extract-text-webpack-plugin@next
+```
+
+* Setup for extract CSS from bundle
+
+```js
+// webpack.common.js
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+module.exports = {
+    module: {
+        rules: [{
+            test: /(\.scss|\.css)$/,
+            use: ExtractTextPlugin.extract({
+                fallback: "style-loader",
+                use: [{
+                    loader: "css-loader",
+                    options: {
+                        modules: true,
+                        localIdentName: '[name]__[local]--[hash:base64:5]',
+                        url: false,
+                        minimize: true,
+                        sourceMap: true
+                    }
+                }, {
+                    loader: "postcss-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                }]
+            })
+        }]
+    },
+    plugins: [
+        new ExtractTextPlugin("styles.css"),
+    ],
+}
+```
+
+
+---
+
 ### 環境切分
 
 * ref:
