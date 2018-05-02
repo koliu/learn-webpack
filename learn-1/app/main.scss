@@ -1,0 +1,42 @@
+html {
+    box-sizing: border-box;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+$yellowgreen: yellowgreen;
+.root {
+    color: $yellowgreen;
+}
+
+.root1 {
+    color: red;
+    width: calc(100% - 3em);
+    display: grid;
+    transition: all .5s;
+    user-select: none;
+    background: linear-gradient(to bottom, white, black);
+}
