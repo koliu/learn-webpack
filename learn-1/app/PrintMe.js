@@ -1,4 +1,4 @@
 export default function printMe() {
-    // console.log("printMe.js init");
-    console.log("printMe.js modified...");
+    console.log("printMe.js init");
+    // console.log("printMe.js modified...");
 }

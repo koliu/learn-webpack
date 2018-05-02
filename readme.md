@@ -117,7 +117,7 @@ ERROR in Entry module not found: Error: Can't resolve './src' in 'W:\_workspace\
 
 ```
 
-* 有四種設定值：
+* 設定值：[Devtool](https://webpack.js.org/configuration/devtool/)
     * source-map: 功能完全，但會降低打包速度。
     * cheap-module-source-map: 只能對應到程式碼的列號，無法對應該列中的實際行號，不利除錯，但速度快。
     * eval-source-map: 在原始碼檔案中產生對應資料，不影響打包速度，但安全性及執行時期效能較差，只適用於開發階段。
@@ -673,6 +673,27 @@ bundle.js:1 [HMR] App is up to date.
             * [webpack-dev-sever HMR do not works, only working full reload behavior](https://github.com/webpack/webpack-dev-server/issues/1315)
 
 
+### 環境切分
+
+* ref:
+    * [學 webpack 2 （CLI/config/webpack-dev-server/ 環境分離/babel ）](https://medium.com/@ouonnz/%E5%AD%B8-webpack-2-%E4%B8%8A-8621078de827)
+    * [Production](https://webpack.js.org/guides/production/)
+* Setup:
+    1. 依環境需求拆分 webpack.config.js 為 webpack.common.js/webpack.dev.js/webpack.prod.js
+        * 會用到 webpack-merge 將 webpack.common.js 合併到各區設定檔。需 yarn add --dev webpack-merge
+    2. 設定 package.json
+        * 利用 --config 來指定要使用的環境設定檔
+
+```json
+{
+    "scripts": {
+        "build": "webpack --config webpack.prod.js",
+        "start": "webpack-dev-server --config webpack.dev.js --progress",
+        "start-hot": "webpack-dev-server --open --config webpack.dev.js --hot --hot-only --progress",
+        "start-prod": "webpack-dev-server --config webpack.prod.js --progress"
+    }
+}
+```
 ---
 ## 待研究
 * [webpack2引入bootstrap的坑](https://www.cnblogs.com/oufeng/p/6819161.html)
