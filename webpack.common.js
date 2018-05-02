@@ -1,5 +1,41 @@
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+// the path(s) that should be cleaned
+const pathsToClean = [
+    'learn-1/public', // removes 'public' folder
+    // 'build/*.*', // removes all files in 'build' folder
+    // 'web/*.js' // removes all JavaScript files in 'web' folder
+];
+// the clean options to use
+let cleanOptions = {
+    // Absolute path to your webpack root folder (paths appended to this)
+    // Default: root of your package
+    root: __dirname,
+
+    // exclude: ['shared.js'],
+
+    // Write logs to console.
+    verbose: true,
+
+    // Use boolean "true" to test/emulate delete. (will not remove files).
+    // Default: false - remove files
+    dry: false,
+
+    // If true, remove files on recompile. 
+    // Default: false
+    watch: false,
+
+    // allow the plugin to clean folders outside of the webpack root.
+    // Default: false - don't allow clean folder outside of the webpack root
+    allowExternal: false,
+
+    // perform clean just before files are emitted to the output dir
+    // Default: false
+    beforeEmit: false,
+};
+
 
 module.exports = {
     // __dirname 是 webpack 的全域變數：當前檔案的所在目錄
@@ -55,5 +91,6 @@ module.exports = {
             title: 'Custom template',
             template: `${__dirname}/learn-1/app/index.tmpl.html`
         }),
+        new CleanWebpackPlugin(pathsToClean, cleanOptions),
     ],
 }

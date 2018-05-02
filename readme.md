@@ -803,6 +803,68 @@ module.exports = merge(common, {
 }
 ```
 
+#### [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin)
+
+> remove/clean your build folder(s) before building
+
+* ref:
+    * [clean-webpack-plugin](https://www.google.com.tw/search?q=webpack+clean+plugin&rlz=1C1CHZL_enTW764TW764&oq=webpack+clean&aqs=chrome.1.69i57j0l5.7739j0j1&sourceid=chrome&ie=UTF-8)
+    * [webpack2利用插件clean-webpack-plugin来清除dist文件夹中重复的文件](https://www.cnblogs.com/oufeng/p/6819320.html)
+    * [<20 - Plugins 小幫手 03> 清除 bundle 後的資料夾 - clean-webpack-plugin](https://ithelp.ithome.com.tw/articles/10186633)
+
+* Install
+
+```shell
+yarn add --dev clean-webpack-plugin
+```
+
+* Setup
+
+```js
+// webpack.common.js
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+// the path(s) that should be cleaned
+const pathsToClean = [
+    'learn-1/public', // removes 'learn-1/public' folder
+    // 'build/*.*', // removes all files in 'build' folder
+    // 'web/*.js' // removes all JavaScript files in 'web' folder
+];
+// the clean options to use
+let cleanOptions = {
+    // Absolute path to your webpack root folder (paths appended to this)
+    // Default: root of your package
+    root: __dirname,
+
+    // exclude: ['shared.js'],
+
+    // Write logs to console.
+    verbose: true,
+
+    // Use boolean "true" to test/emulate delete. (will not remove files).
+    // Default: false - remove files
+    dry: false,
+
+    // If true, remove files on recompile. 
+    // Default: false
+    watch: false,
+
+    // allow the plugin to clean folders outside of the webpack root.
+    // Default: false - don't allow clean folder outside of the webpack root
+    allowExternal: false,
+
+    // perform clean just before files are emitted to the output dir
+    // Default: false
+    beforeEmit: false,
+};
+
+
+module.exports = {
+    plugins: [
+        new CleanWebpackPlugin(pathsToClean, cleanOptions),
+    ],
+}
+```
 
 ---
 
@@ -832,6 +894,4 @@ module.exports = merge(common, {
 ## 待研究
 * [webpack2引入bootstrap的坑](https://www.cnblogs.com/oufeng/p/6819161.html)
 * [使用 webpack 模組化你的程式碼，讓人生更美好](https://ithelp.ithome.com.tw/users/20069901/ironman/1074)
-* [clean-webpack-plugin](https://www.google.com.tw/search?q=webpack+clean+plugin&rlz=1C1CHZL_enTW764TW764&oq=webpack+clean&aqs=chrome.1.69i57j0l5.7739j0j1&sourceid=chrome&ie=UTF-8)
-    * [webpack2利用插件clean-webpack-plugin来清除dist文件夹中重复的文件](https://www.cnblogs.com/oufeng/p/6819320.html)
-    * [<20 - Plugins 小幫手 03> 清除 bundle 後的資料夾 - clean-webpack-plugin](https://ithelp.ithome.com.tw/articles/10186633)
+* [Webpack@4零基础入门](https://www.jianshu.com/p/4320b1a3e3cf)
