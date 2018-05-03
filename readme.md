@@ -28,7 +28,7 @@ yarn add --dev webpack
 
 ### Using(with command line):
 
-1.public/index.html: 先指定之後會用 Webpack 打包產生的 bundle.js
+1. public/index.html: 先指定之後會用 Webpack 打包產生的 bundle.js
 
 ```html
 <body>
@@ -37,7 +37,7 @@ yarn add --dev webpack
 </body>
 ```
 
-2.app/Greeter.js: CommonJS
+2. app/Greeter.js: CommonJS
 
 ```js
 module.exports = () => {
@@ -47,14 +47,14 @@ module.exports = () => {
 }
 ```
 
-3.app/main.js: CommonJS
+3. app/main.js: CommonJS
 
 ```js
 const greeter = require("./Greeter.js");
 document.getElementById("root").appendChild(greeter());
 ```
 
-4.Using Webpack: 4.6.0(In command line)
+4. Using Webpack: 4.6.0(In command line)
 
     * 語法：
     ```shell
@@ -69,11 +69,11 @@ document.getElementById("root").appendChild(greeter());
     # Module not found: Error: Can't resolve 'public/bundle.js' in 'W:\_workspace\learn-webpack\learn-1'
     # @ multi ./app/main.js public/bundle.js
     ```
-5.Run public/index.html in browser >> "Hello, this is Greeter.js"
+5. Run public/index.html in browser >> "Hello, this is Greeter.js"
 
 ### Using(with webpack.config.js):
 
-1.Add webpack.config.js to root of project
+1. Add webpack.config.js to root of project
 
 ```js
 module.exports = {
@@ -88,7 +88,7 @@ module.exports = {
 }
 ```
 
-2.Run
+2. Run
 
 ```shell
 ..\node_modules\.bin\webpack
@@ -163,7 +163,10 @@ ERROR in Entry module not found: Error: Can't resolve './src' in 'W:\_workspace\
 * 要用 Source Map 必須在 webpack.config.js 設定 devtool
 
 ```shell
-
+module.exports = {
+    // source map: source-map, cheap-module-source-map, eval-source-map, cheap-module-eval-source-map
+    devtool: "eval-source-map",
+};
 ```
 
 * 設定值：[Devtool](https://webpack.js.org/configuration/devtool/)
