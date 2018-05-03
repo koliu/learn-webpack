@@ -8,12 +8,16 @@
 
 * 將所有 js/css 打包成單一的 bundle.js(with Uglify, OccurrenceOrder, babel)
 * 也可將 css 抽成獨立的檔案
+* SCSS 轉換
 * 可以轉譯 pug 為 html
 * 可以利用 chunkhash 及 html-webpack-plugin 來注入hash 檔名及資源值
 
 ## 待處理的問題
 
 * webpack-dev-server 的 hot 功能尚無法正常運作(有跑但Runtime 模組沒更新)
+* css modules 置換原來就寫死的 class name
+
+---
 
 ### Install
 
@@ -89,6 +93,40 @@ module.exports = {
 ```shell
 ..\node_modules\.bin\webpack
 ```
+
+* 打包的三種情境([[前端工具]Webpack2 手把手一起入門](https://dotblogs.com.tw/kinanson/2017/06/11/124206#6))
+    * SPA: 監聽入口點，其餘有 import 的自動依賴進來
+
+```javascript
+entry: {
+    app: [
+        './src/index.js',
+    ]
+}
+```
+
+    * Bundle: 把不同頁面用的 js 都打包成一個檔
+
+```javascript
+entry: {
+    app: [
+      './src/index.js',
+      './src/home.js',
+      './src/index-outside.js'
+    ]
+}
+```
+
+    * 各頁面有獨自的 js 檔
+
+```javascript
+entry: {
+    app: './src/index.js',
+    home: './src/index1.js',
+    indexOutside: './src/index-outside.js'
+}
+```
+
 
 ### Run webpack by npm start/npm run {custom name}
 
@@ -932,6 +970,16 @@ module.exports = {
 }
 ```
 
+* 也可以使用 Node.js 的 rimraf
+
+```js
+// webpack.common.js
+const rimraf = require('rimraf');
+const path = require('path');
+
+rimraf(path.join(__dirname, './learn-1/public'), () => console.log('success to remove ./learn-1/public/'));
+```
+
 ---
 
 ### 環境切分
@@ -939,6 +987,8 @@ module.exports = {
 * ref:
     * [學 webpack 2 （CLI/config/webpack-dev-server/ 環境分離/babel ）](https://medium.com/@ouonnz/%E5%AD%B8-webpack-2-%E4%B8%8A-8621078de827)
     * [Production](https://webpack.js.org/guides/production/)
+    * [[前端工具]Webpack2 手把手一起入門](https://dotblogs.com.tw/kinanson/2017/06/11/124206#6)
+
 * Setup:
     1. 依環境需求拆分 webpack.config.js 為 webpack.common.js/webpack.dev.js/webpack.prod.js
         * 會用到 webpack-merge 將 webpack.common.js 合併到各區設定檔。需 yarn add --dev webpack-merge
@@ -946,12 +996,47 @@ module.exports = {
         * 利用 --config 來指定要使用的環境設定檔
 
 ```json
+// package.json
 {
     "scripts": {
         "build": "webpack --config webpack.prod.js",
         "start": "webpack-dev-server --config webpack.dev.js --progress",
         "start-hot": "webpack-dev-server --open --config webpack.dev.js --hot --hot-only --progress",
         "start-prod": "webpack-dev-server --config webpack.prod.js --progress"
+    }
+}
+```
+
+* 也可以使用 process.env.NODE_ENV 環境變數來區分
+
+```js
+// webpack.config.js
+
+const webpackConfig = {
+    entry: {
+        main: `${__dirname}/learn-1/app/main.js`
+    }
+}
+
+switch (process.env.NODE_ENV.trim()) {
+    case "dev":
+        webpackConfig.devtool = '#cheap-module-eval-source-map';
+        break;
+    case "prod":
+        webpackConfig.devtool = '#source-map';
+        webpackConfig.plugins.push(
+            new webpack.BannerPlugin('版权所有，翻版必究！')
+        );
+        break;
+}
+```
+
+```json
+// package.json
+{
+    "scripts": {
+        "dev": "set NODE_ENV=dev && webpack --watch",
+        "prod": "set NODE_ENV=prod && webpack"
     }
 }
 ```

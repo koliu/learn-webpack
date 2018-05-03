@@ -36,7 +36,6 @@ let cleanOptions = {
     beforeEmit: false,
 };
 
-
 module.exports = {
     // __dirname 是 webpack 的全域變數：當前檔案的所在目錄
     // entry: 進入點檔案
